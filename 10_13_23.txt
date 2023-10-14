@@ -1,0 +1,117 @@
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+5 rows in set (0.038 sec)
+
+MariaDB [(none)]> CREATE DATABASE test2;
+Query OK, 1 row affected (0.041 sec)
+
+MariaDB [(none)]> DESCRIBE test2;
+ERROR 1046 (3D000): No database selected
+MariaDB [(none)]> USE test2;
+Database changed
+MariaDB [test2]> CREATE TABLE Dragonball_Z_Characters (name CHAR(15), alias CHAR(15), special_move CHAR(20), importance_level INT);
+Query OK, 0 rows affected (0.077 sec)
+
+MariaDB [test2]> DESCRIBE Dragonball_Z_Charactersters;
+ERROR 1146 (42S02): Table 'test2.dragonball_z_charactersters' doesn't exist
+MariaDB [test2]> SELECT * FROM Dragonball_Z_Characters;
+Empty set (0.041 sec)
+
+MariaDB [test2]> SHOW TABLES;
++-------------------------+
+| Tables_in_test2         |
++-------------------------+
+| dragonball_z_characters |
++-------------------------+
+1 row in set (0.002 sec)
+
+MariaDB [test2]> SHOW Dragonball_Z_Characters;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Dragonball_Z_Characters' at line 1
+MariaDB [test2]> INSERT INTO Dragonball_Z_Characters VALUES('Goku', 'Kakarot', 'Kamehameha', 1);
+Query OK, 1 row affected (0.051 sec)
+
+MariaDB [test2]> SELECT * FROM Dragonball_Z_Characters;
++------+---------+--------------+------------------+
+| name | alias   | special_move | importance_level |
++------+---------+--------------+------------------+
+| Goku | Kakarot | Kamehameha   |                1 |
++------+---------+--------------+------------------+
+1 row in set (0.039 sec)
+
+MariaDB [test2]> CREATE TABLE importance_values(importance_level INT, description CHAR(75));
+Query OK, 0 rows affected (0.056 sec)
+
+MariaDB [test2]> INSERT INTO importance_values VALUES(1, 'vital to storyline'), (2, 'can be missed'), (3, 'not needed');
+Query OK, 3 rows affected (0.041 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [test2]> SELECT * FROM importance_values;
++------------------+--------------------+
+| importance_level | description        |
++------------------+--------------------+
+|                1 | vital to storyline |
+|                2 | can be missed      |
+|                3 | not needed         |
++------------------+--------------------+
+3 rows in set (0.001 sec)
+
+MariaDB [test2]> INSERT INTO Dragonball_Z_Characters VALUES('Krillen', 'n/a', 'Kamehameha', 1);
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [test2]> SELECT * FROM Dragonball_Z_Characters;
++---------+---------+--------------+------------------+
+| name    | alias   | special_move | importance_level |
++---------+---------+--------------+------------------+
+| Goku    | Kakarot | Kamehameha   |                1 |
+| Krillen | n/a     | Kamehameha   |                1 |
++---------+---------+--------------+------------------+
+2 rows in set (0.002 sec)
+
+MariaDB [test2]> SELECT * FROM Dragonball_Z_Characters WHERE special_move = 'Kamehameha';
++---------+---------+--------------+------------------+
+| name    | alias   | special_move | importance_level |
++---------+---------+--------------+------------------+
+| Goku    | Kakarot | Kamehameha   |                1 |
+| Krillen | n/a     | Kamehameha   |                1 |
++---------+---------+--------------+------------------+
+2 rows in set (0.041 sec)
+
+MariaDB [test2]> SELECT * FROM Dragonball_Z_Characters WHERE special_move = 'Kamehameha' \g
++---------+---------+--------------+------------------+
+| name    | alias   | special_move | importance_level |
++---------+---------+--------------+------------------+
+| Goku    | Kakarot | Kamehameha   |                1 |
+| Krillen | n/a     | Kamehameha   |                1 |
++---------+---------+--------------+------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [test2]> SELECT * FROM Dragonball_Z_Characters WHERE special_move = 'Kamehameha' \G
+*************************** 1. row ***************************
+            name: Goku
+           alias: Kakarot
+    special_move: Kamehameha
+importance_level: 1
+*************************** 2. row ***************************
+            name: Krillen
+           alias: n/a
+    special_move: Kamehameha
+importance_level: 1
+2 rows in set (0.038 sec)
+
+MariaDB [test2]> SELECT * FROM Dragonball_Z_Characters WHERE alias = 'n/a' \G
+*************************** 1. row ***************************
+            name: Krillen
+           alias: n/a
+    special_move: Kamehameha
+importance_level: 1
+1 row in set (0.001 sec)
+
+MariaDB [test2]> notee
